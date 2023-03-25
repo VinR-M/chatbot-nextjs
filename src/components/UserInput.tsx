@@ -1,19 +1,16 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import styles from '../styles/components/UserInput.module.css'
+import { MessagesContext } from '@/context/MessagesProvider'
 
 export default function UserInput() {
   const [userInput, setUserInput] = useState('')
-  const [messages, setMessages] = useState([])
+  const [messages, setMessages] = useContext(MessagesContext)
 
   const handleSubmit = (e: any) => {
     e.preventDefault()
     setMessages([...messages, userInput])
     setUserInput('')
   }
-
-  const renderMessages = messages.map((message, index) => (
-    <p key={index}>{message}</p>
-  ))
 
   return (
     <div className={styles.container}>
@@ -27,8 +24,6 @@ export default function UserInput() {
         <button className={styles.sendButton}>Send</button>
 
       </form>
-
-      <p>{renderMessages}</p>
     </div>
   )
 
