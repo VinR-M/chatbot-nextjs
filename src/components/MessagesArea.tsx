@@ -11,7 +11,7 @@ export default function MessagesArea() {
   const [messages] = useContext(MessagesContext)
 
   const renderMessages = messages.map((message: message, index: number) => (
-    <div key={index} className={styles.messagesContainer}>
+    <div key={index} className={styles.messageContainer}>
       {message?.agent
         ? (
           <p className={styles.agentMessage}>{message?.agent}</p>

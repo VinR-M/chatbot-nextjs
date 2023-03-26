@@ -44,6 +44,8 @@ export default function UserInput() {
     <div className={styles.container}>
       <form className={styles.form} onSubmit={handleSubmit}>
         <input
+          autoFocus
+          name='input'
           className={styles.input}
           type='text'
           value={userInput}

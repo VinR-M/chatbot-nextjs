@@ -12,8 +12,8 @@
 .messageContainer {
   width: 100%;
   padding: 0.5rem 0;
-
 }
+
 .agentMessage {
   display: flex;
   justify-content: left;
