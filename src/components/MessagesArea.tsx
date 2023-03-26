@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import styles from '../styles/components/MessagesArea.module.css'
 import { MessagesContext } from '@/context/MessagesProvider'
 
-type messages = {
+export type message = {
   user: string,
   agent: string,
 }
@@ -10,8 +10,8 @@ type messages = {
 export default function MessagesArea() {
   const [messages] = useContext(MessagesContext)
 
-  const renderMessages = messages.map((message: messages, index: number) => (
-    <div key={index} className={styles.messageContainer}>
+  const renderMessages = messages.map((message: message, index: number) => (
+    <div key={index} className={styles.messagesContainer}>
       {message?.agent
         ? (
           <p className={styles.agentMessage}>{message?.agent}</p>

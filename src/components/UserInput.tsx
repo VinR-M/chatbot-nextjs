@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import styles from '../styles/components/UserInput.module.css'
 import { MessagesContext } from '@/context/MessagesProvider'
 
@@ -10,11 +10,17 @@ export default function UserInput() {
     return Math.floor(Math.random() * max);
   }
 
-  // const fetchData = async () => {
-  //   const res = await fetch(`https://swapi.dev/api/planets/${getRandomInt(59)}`)
-  //   const data = await res.json()
-  //   return data?.name
-  // }
+  useEffect(() => {
+    const fetchMessage = async (input: string) => {
+      const res = await fetch(`http://localhost:3000/api`, {
+        method: 'POST',
+        body: JSON.stringify(input)
+      })
+      const data = await res.json()
+      setMessages([...messages, { agent: data }])
+    }
+    fetchMessage('Hello')
+  }, [])
 
   const fetchMessage = async (input: string) => {
     const res = await fetch(`http://localhost:3000/api`, {
@@ -22,16 +28,16 @@ export default function UserInput() {
       body: JSON.stringify(input)
     })
     const data = await res.json()
-    return data
+    setMessages((previousMessages) => [...previousMessages, { agent: data }])
   }
 
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
-    const msg = await fetchMessage(userInput)
-    setMessages([...messages, { user: userInput }, { agent: msg }])
-    console.log(msg)
+    if (userInput == '') return
+    setMessages((previousMessages) => [...previousMessages, { user: userInput }])
     setUserInput('')
+    await fetchMessage(userInput)
   }
 
   return (
