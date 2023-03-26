@@ -10,19 +10,27 @@ export default function UserInput() {
     return Math.floor(Math.random() * max);
   }
 
-  console.log();
-  const fetchData = async () => {
-    const res = await fetch(`https://swapi.dev/api/planets/${getRandomInt(59)}`)
+  // const fetchData = async () => {
+  //   const res = await fetch(`https://swapi.dev/api/planets/${getRandomInt(59)}`)
+  //   const data = await res.json()
+  //   return data?.name
+  // }
+
+  const fetchMessage = async (input: string) => {
+    const res = await fetch(`http://localhost:3000/api`, {
+      method: 'POST',
+      body: JSON.stringify(input)
+    })
     const data = await res.json()
-    return data?.name
+    return data
   }
 
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
-    const msg = await fetchData()
+    const msg = await fetchMessage(userInput)
     setMessages([...messages, { user: userInput }, { agent: msg }])
-    // console.log(messages)
+    console.log(msg)
     setUserInput('')
   }
 
