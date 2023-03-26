@@ -6,9 +6,23 @@ export default function UserInput() {
   const [userInput, setUserInput] = useState('')
   const [messages, setMessages] = useContext(MessagesContext)
 
-  const handleSubmit = (e: any) => {
+  function getRandomInt(max: number) {
+    return Math.floor(Math.random() * max);
+  }
+
+  console.log();
+  const fetchData = async () => {
+    const res = await fetch(`https://swapi.dev/api/planets/${getRandomInt(59)}`)
+    const data = await res.json()
+    return data?.name
+  }
+
+
+  const handleSubmit = async (e: any) => {
     e.preventDefault()
-    setMessages([...messages, userInput])
+    const msg = await fetchData()
+    setMessages([...messages, { user: userInput }, { agent: msg }])
+    // console.log(messages)
     setUserInput('')
   }
 
